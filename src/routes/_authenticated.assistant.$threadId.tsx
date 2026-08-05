@@ -166,8 +166,7 @@ function ThreadPage() {
 
       <div className="p-3">
         <PromptInput
-          onSubmit={(event) => {
-            event.preventDefault();
+          onSubmit={() => {
             void send(input);
           }}
         >

@@ -59,7 +59,7 @@ function ProfilePage() {
       <PageHeader
         eyebrow="Profile"
         title={fullName || "Your profile"}
-        description={user?.email ?? undefined}
+        {...(user?.email ? { description: user.email } : {})}
         action={
           <Button variant="hero" size="lg" onClick={save} disabled={update.isPending}>
             Save changes
