@@ -76,19 +76,23 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "LifeOS AI — Your AI life operating system" },
+      { title: "LifeOS AI — Sign in to your AI life OS" },
       {
         name: "description",
         content:
-          "LifeOS AI unifies your tasks, study plan, goals, money, health and career growth with an AI assistant.",
+          "Sign in to LifeOS AI to plan your day, track study, goals, spending and health with an AI copilot.",
       },
-      { property: "og:title", content: "LifeOS AI" },
+      { property: "og:title", content: "LifeOS AI — Sign in to your AI life OS" },
       {
         property: "og:description",
-        content: "One AI workspace for your tasks, study, goals, money and health.",
+        content: "Sign in to LifeOS AI to plan your day, track study, goals, spending and health with an AI copilot.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "LifeOS AI — Sign in to your AI life OS" },
+      { name: "twitter:description", content: "Sign in to LifeOS AI to plan your day, track study, goals, spending and health with an AI copilot." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/309194b9-8e89-453b-b943-7076636db1cb/id-preview-5217d755--b8dfa91e-840e-4fd2-a169-28c2b2353d8a.lovable.app-1785909413226.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/309194b9-8e89-453b-b943-7076636db1cb/id-preview-5217d755--b8dfa91e-840e-4fd2-a169-28c2b2353d8a.lovable.app-1785909413226.png" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },

@@ -20,10 +20,10 @@ export const Route = createFileRoute("/")({
         content:
           "Sign in to LifeOS AI to plan your day, track study, goals, spending and health with an AI copilot.",
       },
-      { property: "og:title", content: "LifeOS AI — Sign in" },
+      { property: "og:title", content: "LifeOS AI — Sign in to your AI life OS" },
       {
         property: "og:description",
-        content: "Your tasks, study plan, goals, money and health in one AI workspace.",
+        content: "Sign in to LifeOS AI to plan your day, track study, goals, spending and health with an AI copilot.",
       },
     ],
   }),
