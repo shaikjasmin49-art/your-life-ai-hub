@@ -38,7 +38,7 @@ export function useUpdateProfile() {
   return useMutation({
     mutationFn: async (values: {
       full_name?: string | null;
-      headline?: string | null;
+      bio?: string | null;
       skills?: string[];
       achievements?: string[];
     }) => {
@@ -241,7 +241,7 @@ export function useExpenseMutations() {
 
   const add = useMutation({
     mutationFn: async (values: {
-      title: string;
+      note: string;
       amount: number;
       category: string;
       spent_on: string;
@@ -273,7 +273,7 @@ export function useHealthLogs() {
       const { data, error } = await supabase
         .from("health_logs")
         .select("*")
-        .order("logged_on", { ascending: false })
+        .order("log_date", { ascending: false })
         .limit(30);
       if (error) throw error;
       return data;
@@ -285,15 +285,15 @@ export function useUpsertHealthLog() {
   const invalidate = useInvalidate([["health"]]);
   return useMutation({
     mutationFn: async (values: {
-      logged_on: string;
-      water_ml: number;
+      log_date: string;
+      water_glasses: number;
       sleep_hours: number;
       steps: number;
     }) => {
       const userId = await requireUserId();
       const { error } = await supabase
         .from("health_logs")
-        .upsert({ user_id: userId, ...values }, { onConflict: "user_id,logged_on" });
+        .upsert({ user_id: userId, ...values }, { onConflict: "user_id,log_date" });
       if (error) throw error;
     },
     onSuccess: invalidate,
