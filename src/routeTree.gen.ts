@@ -17,6 +17,7 @@ import { Route as AuthenticatedExpensesRouteImport } from './routes/_authenticat
 import { Route as AuthenticatedGoalsRouteImport } from './routes/_authenticated.goals'
 import { Route as AuthenticatedHealthRouteImport } from './routes/_authenticated.health'
 import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated.profile'
+import { Route as AuthenticatedResumeRouteImport } from './routes/_authenticated.resume'
 import { Route as AuthenticatedStudyRouteImport } from './routes/_authenticated.study'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
 
@@ -59,6 +60,11 @@ const AuthenticatedProfileRoute = AuthenticatedProfileRouteImport.update({
   path: '/profile',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
+const AuthenticatedResumeRoute = AuthenticatedResumeRouteImport.update({
+  id: '/resume',
+  path: '/resume',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
 const AuthenticatedStudyRoute = AuthenticatedStudyRouteImport.update({
   id: '/study',
   path: '/study',
@@ -78,6 +84,7 @@ export interface FileRoutesByFullPath {
   '/goals': typeof AuthenticatedGoalsRoute
   '/health': typeof AuthenticatedHealthRoute
   '/profile': typeof AuthenticatedProfileRoute
+  '/resume': typeof AuthenticatedResumeRoute
   '/study': typeof AuthenticatedStudyRoute
   '/api/chat': typeof ApiChatRoute
 }
@@ -89,6 +96,7 @@ export interface FileRoutesByTo {
   '/goals': typeof AuthenticatedGoalsRoute
   '/health': typeof AuthenticatedHealthRoute
   '/profile': typeof AuthenticatedProfileRoute
+  '/resume': typeof AuthenticatedResumeRoute
   '/study': typeof AuthenticatedStudyRoute
   '/api/chat': typeof ApiChatRoute
 }
@@ -102,6 +110,7 @@ export interface FileRoutesById {
   '/_authenticated/goals': typeof AuthenticatedGoalsRoute
   '/_authenticated/health': typeof AuthenticatedHealthRoute
   '/_authenticated/profile': typeof AuthenticatedProfileRoute
+  '/_authenticated/resume': typeof AuthenticatedResumeRoute
   '/_authenticated/study': typeof AuthenticatedStudyRoute
   '/api/chat': typeof ApiChatRoute
 }
@@ -115,6 +124,7 @@ export interface FileRouteTypes {
     | '/goals'
     | '/health'
     | '/profile'
+    | '/resume'
     | '/study'
     | '/api/chat'
   fileRoutesByTo: FileRoutesByTo
@@ -126,6 +136,7 @@ export interface FileRouteTypes {
     | '/goals'
     | '/health'
     | '/profile'
+    | '/resume'
     | '/study'
     | '/api/chat'
   id:
@@ -138,6 +149,7 @@ export interface FileRouteTypes {
     | '/_authenticated/goals'
     | '/_authenticated/health'
     | '/_authenticated/profile'
+    | '/_authenticated/resume'
     | '/_authenticated/study'
     | '/api/chat'
   fileRoutesById: FileRoutesById
@@ -206,6 +218,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedProfileRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/_authenticated/resume': {
+      id: '/_authenticated/resume'
+      path: '/resume'
+      fullPath: '/resume'
+      preLoaderRoute: typeof AuthenticatedResumeRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
     '/_authenticated/study': {
       id: '/_authenticated/study'
       path: '/study'
@@ -230,6 +249,7 @@ interface AuthenticatedRouteChildren {
   AuthenticatedGoalsRoute: typeof AuthenticatedGoalsRoute
   AuthenticatedHealthRoute: typeof AuthenticatedHealthRoute
   AuthenticatedProfileRoute: typeof AuthenticatedProfileRoute
+  AuthenticatedResumeRoute: typeof AuthenticatedResumeRoute
   AuthenticatedStudyRoute: typeof AuthenticatedStudyRoute
 }
 
@@ -240,6 +260,7 @@ const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedGoalsRoute: AuthenticatedGoalsRoute,
   AuthenticatedHealthRoute: AuthenticatedHealthRoute,
   AuthenticatedProfileRoute: AuthenticatedProfileRoute,
+  AuthenticatedResumeRoute: AuthenticatedResumeRoute,
   AuthenticatedStudyRoute: AuthenticatedStudyRoute,
 }
 
