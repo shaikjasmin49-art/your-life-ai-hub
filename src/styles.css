@@ -111,11 +111,6 @@
 /* LifeOS AI — dark-only glassmorphism system, violet -> electric blue. */
 :root {
   --radius: 1rem;
-  --background: oklch(0.16 0.035 governance);
-}
-
-:root {
-  --radius: 1rem;
   --background: oklch(0.15 0.035 285);
   --foreground: oklch(0.97 0.008 285);
   --card: oklch(0.21 0.038 285 / 55%);
