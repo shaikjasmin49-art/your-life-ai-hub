@@ -1,6 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { convertToModelMessages, streamText, type UIMessage } from "ai";
 
+import type { Json } from "@/integrations/supabase/types";
+
 import {
   CHAT_MODEL,
   createLovableAiGatewayProvider,
@@ -67,7 +69,7 @@ export const Route = createFileRoute("/api/chat")({
         const result = streamText({
           model: gateway(CHAT_MODEL),
           system,
-          messages: convertToModelMessages(uiMessages),
+          messages: await convertToModelMessages(uiMessages),
         });
 
         const response = result.toUIMessageStreamResponse({
@@ -83,7 +85,7 @@ export const Route = createFileRoute("/api/chat")({
               user_id: string;
               role: string;
               message_id: string | null;
-              parts: unknown;
+              parts: Json;
             }[];
             if (lastUser) {
               rows.push({
@@ -91,7 +93,7 @@ export const Route = createFileRoute("/api/chat")({
                 user_id: auth.userId,
                 role: "user",
                 message_id: lastUser.id ?? null,
-                parts: lastUser.parts,
+                parts: lastUser.parts as unknown as Json,
               });
             }
             rows.push({
@@ -99,7 +101,7 @@ export const Route = createFileRoute("/api/chat")({
               user_id: auth.userId,
               role: responseMessage.role,
               message_id: responseMessage.id ?? null,
-              parts: responseMessage.parts,
+              parts: responseMessage.parts as unknown as Json,
             });
 
             const { error } = await auth.supabase.from("chat_messages").insert(rows);

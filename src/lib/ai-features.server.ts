@@ -51,7 +51,7 @@ export async function runResumeAnalysis(input: {
   fileName: string;
   mimeType: string;
   fileData: string;
-  targetRole?: string;
+  targetRole?: string | undefined;
 }): Promise<ResumeAnalysis> {
   const key = requireLovableApiKey();
 
