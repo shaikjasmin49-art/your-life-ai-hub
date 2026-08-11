@@ -14,6 +14,33 @@ export type Database = {
   }
   public: {
     Tables: {
+      career_profiles: {
+        Row: {
+          created_at: string
+          skills: Json
+          target_role: string
+          updated_at: string
+          user_id: string
+          weekly_hours: number
+        }
+        Insert: {
+          created_at?: string
+          skills?: Json
+          target_role?: string
+          updated_at?: string
+          user_id: string
+          weekly_hours?: number
+        }
+        Update: {
+          created_at?: string
+          skills?: Json
+          target_role?: string
+          updated_at?: string
+          user_id?: string
+          weekly_hours?: number
+        }
+        Relationships: []
+      }
       chat_messages: {
         Row: {
           created_at: string
@@ -178,6 +205,90 @@ export type Database = {
         }
         Relationships: []
       }
+      interview_sessions: {
+        Row: {
+          created_at: string
+          id: string
+          overall_score: number | null
+          recommended_topics: string[]
+          status: string
+          strengths: string[]
+          target_role: string
+          turns: Json
+          updated_at: string
+          user_id: string
+          weaknesses: string[]
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          overall_score?: number | null
+          recommended_topics?: string[]
+          status?: string
+          strengths?: string[]
+          target_role: string
+          turns?: Json
+          updated_at?: string
+          user_id: string
+          weaknesses?: string[]
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          overall_score?: number | null
+          recommended_topics?: string[]
+          status?: string
+          strengths?: string[]
+          target_role?: string
+          turns?: Json
+          updated_at?: string
+          user_id?: string
+          weaknesses?: string[]
+        }
+        Relationships: []
+      }
+      placement_applications: {
+        Row: {
+          applied_on: string
+          assessment_on: string | null
+          company: string
+          created_at: string
+          id: string
+          interview_on: string | null
+          notes: string | null
+          role: string
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          applied_on?: string
+          assessment_on?: string | null
+          company: string
+          created_at?: string
+          id?: string
+          interview_on?: string | null
+          notes?: string | null
+          role: string
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          applied_on?: string
+          assessment_on?: string | null
+          company?: string
+          created_at?: string
+          id?: string
+          interview_on?: string | null
+          notes?: string | null
+          role?: string
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           achievements: string[]
@@ -220,7 +331,10 @@ export type Database = {
           created_at: string
           file_name: string
           id: string
+          missing_keywords: string[]
           missing_skills: string[]
+          project_ideas: string[]
+          strengths: string[]
           suggestions: string[]
           summary: string | null
           target_role: string | null
@@ -231,7 +345,10 @@ export type Database = {
           created_at?: string
           file_name: string
           id?: string
+          missing_keywords?: string[]
           missing_skills?: string[]
+          project_ideas?: string[]
+          strengths?: string[]
           suggestions?: string[]
           summary?: string | null
           target_role?: string | null
@@ -242,10 +359,52 @@ export type Database = {
           created_at?: string
           file_name?: string
           id?: string
+          missing_keywords?: string[]
           missing_skills?: string[]
+          project_ideas?: string[]
+          strengths?: string[]
           suggestions?: string[]
           summary?: string | null
           target_role?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      roadmap_tasks: {
+        Row: {
+          completed: boolean
+          created_at: string
+          day: number
+          focus: string | null
+          hours: number
+          id: string
+          target_role: string
+          topic: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          completed?: boolean
+          created_at?: string
+          day: number
+          focus?: string | null
+          hours?: number
+          id?: string
+          target_role?: string
+          topic: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          completed?: boolean
+          created_at?: string
+          day?: number
+          focus?: string | null
+          hours?: number
+          id?: string
+          target_role?: string
+          topic?: string
+          updated_at?: string
           user_id?: string
         }
         Relationships: []

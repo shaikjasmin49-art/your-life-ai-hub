@@ -32,6 +32,9 @@ type Analysis = {
   summary: string;
   missingSkills: string[];
   suggestions: string[];
+  strengths: string[];
+  missingKeywords: string[];
+  projectIdeas: string[];
 };
 
 function ResumePage() {
@@ -65,6 +68,9 @@ function ResumePage() {
         summary: analysis.summary,
         missing_skills: analysis.missingSkills,
         suggestions: analysis.suggestions,
+        strengths: analysis.strengths,
+        missing_keywords: analysis.missingKeywords,
+        project_ideas: analysis.projectIdeas,
       });
     } catch (error) {
       toast.error(error instanceof Error ? error.message : "Could not analyse that resume.");
@@ -128,6 +134,42 @@ function ResumePage() {
                 <Progress value={result.atsScore} className="mt-2 h-2" />
               </div>
               {result.summary ? <p className="text-sm text-muted-foreground">{result.summary}</p> : null}
+              {result.strengths.length ? (
+                <div>
+                  <p className="text-sm font-medium">Strengths</p>
+                  <ul className="mt-2 space-y-1.5 text-sm text-muted-foreground">
+                    {result.strengths.map((item) => (
+                      <li key={item} className="rounded-2xl bg-secondary/40 px-3 py-2">
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ) : null}
+              {result.missingKeywords.length ? (
+                <div>
+                  <p className="text-sm font-medium">Missing ATS keywords</p>
+                  <div className="mt-2 flex flex-wrap gap-2">
+                    {result.missingKeywords.map((keyword) => (
+                      <Badge key={keyword} variant="outline" className="rounded-full">
+                        {keyword}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
+              ) : null}
+              {result.projectIdeas.length ? (
+                <div>
+                  <p className="text-sm font-medium">Project suggestions</p>
+                  <ul className="mt-2 space-y-1.5 text-sm text-muted-foreground">
+                    {result.projectIdeas.map((item) => (
+                      <li key={item} className="rounded-2xl bg-secondary/40 px-3 py-2">
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ) : null}
               {result.missingSkills.length ? (
                 <div>
                   <p className="text-sm font-medium">Missing keywords</p>

@@ -13,12 +13,16 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as AuthenticatedAnalyticsRouteImport } from './routes/_authenticated.analytics'
 import { Route as AuthenticatedAssistantRouteImport } from './routes/_authenticated.assistant'
+import { Route as AuthenticatedCareerRouteImport } from './routes/_authenticated.career'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated.dashboard'
 import { Route as AuthenticatedExpensesRouteImport } from './routes/_authenticated.expenses'
 import { Route as AuthenticatedGoalsRouteImport } from './routes/_authenticated.goals'
 import { Route as AuthenticatedHealthRouteImport } from './routes/_authenticated.health'
+import { Route as AuthenticatedInterviewRouteImport } from './routes/_authenticated.interview'
+import { Route as AuthenticatedPlacementsRouteImport } from './routes/_authenticated.placements'
 import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated.profile'
 import { Route as AuthenticatedResumeRouteImport } from './routes/_authenticated.resume'
+import { Route as AuthenticatedRoadmapRouteImport } from './routes/_authenticated.roadmap'
 import { Route as AuthenticatedStudyRouteImport } from './routes/_authenticated.study'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
 import { Route as AuthenticatedAssistantIndexRouteImport } from './routes/_authenticated.assistant.index'
@@ -43,6 +47,11 @@ const AuthenticatedAssistantRoute = AuthenticatedAssistantRouteImport.update({
   path: '/assistant',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
+const AuthenticatedCareerRoute = AuthenticatedCareerRouteImport.update({
+  id: '/career',
+  path: '/career',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
 const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -63,6 +72,16 @@ const AuthenticatedHealthRoute = AuthenticatedHealthRouteImport.update({
   path: '/health',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
+const AuthenticatedInterviewRoute = AuthenticatedInterviewRouteImport.update({
+  id: '/interview',
+  path: '/interview',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedPlacementsRoute = AuthenticatedPlacementsRouteImport.update({
+  id: '/placements',
+  path: '/placements',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
 const AuthenticatedProfileRoute = AuthenticatedProfileRouteImport.update({
   id: '/profile',
   path: '/profile',
@@ -71,6 +90,11 @@ const AuthenticatedProfileRoute = AuthenticatedProfileRouteImport.update({
 const AuthenticatedResumeRoute = AuthenticatedResumeRouteImport.update({
   id: '/resume',
   path: '/resume',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedRoadmapRoute = AuthenticatedRoadmapRouteImport.update({
+  id: '/roadmap',
+  path: '/roadmap',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
 const AuthenticatedStudyRoute = AuthenticatedStudyRouteImport.update({
@@ -100,12 +124,16 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/analytics': typeof AuthenticatedAnalyticsRoute
   '/assistant': typeof AuthenticatedAssistantRouteWithChildren
+  '/career': typeof AuthenticatedCareerRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/expenses': typeof AuthenticatedExpensesRoute
   '/goals': typeof AuthenticatedGoalsRoute
   '/health': typeof AuthenticatedHealthRoute
+  '/interview': typeof AuthenticatedInterviewRoute
+  '/placements': typeof AuthenticatedPlacementsRoute
   '/profile': typeof AuthenticatedProfileRoute
   '/resume': typeof AuthenticatedResumeRoute
+  '/roadmap': typeof AuthenticatedRoadmapRoute
   '/study': typeof AuthenticatedStudyRoute
   '/api/chat': typeof ApiChatRoute
   '/assistant/$threadId': typeof AuthenticatedAssistantThreadIdRoute
@@ -114,12 +142,16 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/analytics': typeof AuthenticatedAnalyticsRoute
+  '/career': typeof AuthenticatedCareerRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/expenses': typeof AuthenticatedExpensesRoute
   '/goals': typeof AuthenticatedGoalsRoute
   '/health': typeof AuthenticatedHealthRoute
+  '/interview': typeof AuthenticatedInterviewRoute
+  '/placements': typeof AuthenticatedPlacementsRoute
   '/profile': typeof AuthenticatedProfileRoute
   '/resume': typeof AuthenticatedResumeRoute
+  '/roadmap': typeof AuthenticatedRoadmapRoute
   '/study': typeof AuthenticatedStudyRoute
   '/api/chat': typeof ApiChatRoute
   '/assistant/$threadId': typeof AuthenticatedAssistantThreadIdRoute
@@ -131,12 +163,16 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteWithChildren
   '/_authenticated/analytics': typeof AuthenticatedAnalyticsRoute
   '/_authenticated/assistant': typeof AuthenticatedAssistantRouteWithChildren
+  '/_authenticated/career': typeof AuthenticatedCareerRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/expenses': typeof AuthenticatedExpensesRoute
   '/_authenticated/goals': typeof AuthenticatedGoalsRoute
   '/_authenticated/health': typeof AuthenticatedHealthRoute
+  '/_authenticated/interview': typeof AuthenticatedInterviewRoute
+  '/_authenticated/placements': typeof AuthenticatedPlacementsRoute
   '/_authenticated/profile': typeof AuthenticatedProfileRoute
   '/_authenticated/resume': typeof AuthenticatedResumeRoute
+  '/_authenticated/roadmap': typeof AuthenticatedRoadmapRoute
   '/_authenticated/study': typeof AuthenticatedStudyRoute
   '/api/chat': typeof ApiChatRoute
   '/_authenticated/assistant/$threadId': typeof AuthenticatedAssistantThreadIdRoute
@@ -148,12 +184,16 @@ export interface FileRouteTypes {
     | '/'
     | '/analytics'
     | '/assistant'
+    | '/career'
     | '/dashboard'
     | '/expenses'
     | '/goals'
     | '/health'
+    | '/interview'
+    | '/placements'
     | '/profile'
     | '/resume'
+    | '/roadmap'
     | '/study'
     | '/api/chat'
     | '/assistant/$threadId'
@@ -162,12 +202,16 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/analytics'
+    | '/career'
     | '/dashboard'
     | '/expenses'
     | '/goals'
     | '/health'
+    | '/interview'
+    | '/placements'
     | '/profile'
     | '/resume'
+    | '/roadmap'
     | '/study'
     | '/api/chat'
     | '/assistant/$threadId'
@@ -178,12 +222,16 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/_authenticated/analytics'
     | '/_authenticated/assistant'
+    | '/_authenticated/career'
     | '/_authenticated/dashboard'
     | '/_authenticated/expenses'
     | '/_authenticated/goals'
     | '/_authenticated/health'
+    | '/_authenticated/interview'
+    | '/_authenticated/placements'
     | '/_authenticated/profile'
     | '/_authenticated/resume'
+    | '/_authenticated/roadmap'
     | '/_authenticated/study'
     | '/api/chat'
     | '/_authenticated/assistant/$threadId'
@@ -226,6 +274,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAssistantRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/_authenticated/career': {
+      id: '/_authenticated/career'
+      path: '/career'
+      fullPath: '/career'
+      preLoaderRoute: typeof AuthenticatedCareerRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
     '/_authenticated/dashboard': {
       id: '/_authenticated/dashboard'
       path: '/dashboard'
@@ -254,6 +309,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedHealthRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/_authenticated/interview': {
+      id: '/_authenticated/interview'
+      path: '/interview'
+      fullPath: '/interview'
+      preLoaderRoute: typeof AuthenticatedInterviewRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/placements': {
+      id: '/_authenticated/placements'
+      path: '/placements'
+      fullPath: '/placements'
+      preLoaderRoute: typeof AuthenticatedPlacementsRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
     '/_authenticated/profile': {
       id: '/_authenticated/profile'
       path: '/profile'
@@ -266,6 +335,13 @@ declare module '@tanstack/react-router' {
       path: '/resume'
       fullPath: '/resume'
       preLoaderRoute: typeof AuthenticatedResumeRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/roadmap': {
+      id: '/_authenticated/roadmap'
+      path: '/roadmap'
+      fullPath: '/roadmap'
+      preLoaderRoute: typeof AuthenticatedRoadmapRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
     '/_authenticated/study': {
@@ -318,24 +394,32 @@ const AuthenticatedAssistantRouteWithChildren =
 interface AuthenticatedRouteChildren {
   AuthenticatedAnalyticsRoute: typeof AuthenticatedAnalyticsRoute
   AuthenticatedAssistantRoute: typeof AuthenticatedAssistantRouteWithChildren
+  AuthenticatedCareerRoute: typeof AuthenticatedCareerRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedExpensesRoute: typeof AuthenticatedExpensesRoute
   AuthenticatedGoalsRoute: typeof AuthenticatedGoalsRoute
   AuthenticatedHealthRoute: typeof AuthenticatedHealthRoute
+  AuthenticatedInterviewRoute: typeof AuthenticatedInterviewRoute
+  AuthenticatedPlacementsRoute: typeof AuthenticatedPlacementsRoute
   AuthenticatedProfileRoute: typeof AuthenticatedProfileRoute
   AuthenticatedResumeRoute: typeof AuthenticatedResumeRoute
+  AuthenticatedRoadmapRoute: typeof AuthenticatedRoadmapRoute
   AuthenticatedStudyRoute: typeof AuthenticatedStudyRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedAnalyticsRoute: AuthenticatedAnalyticsRoute,
   AuthenticatedAssistantRoute: AuthenticatedAssistantRouteWithChildren,
+  AuthenticatedCareerRoute: AuthenticatedCareerRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedExpensesRoute: AuthenticatedExpensesRoute,
   AuthenticatedGoalsRoute: AuthenticatedGoalsRoute,
   AuthenticatedHealthRoute: AuthenticatedHealthRoute,
+  AuthenticatedInterviewRoute: AuthenticatedInterviewRoute,
+  AuthenticatedPlacementsRoute: AuthenticatedPlacementsRoute,
   AuthenticatedProfileRoute: AuthenticatedProfileRoute,
   AuthenticatedResumeRoute: AuthenticatedResumeRoute,
+  AuthenticatedRoadmapRoute: AuthenticatedRoadmapRoute,
   AuthenticatedStudyRoute: AuthenticatedStudyRoute,
 }
 

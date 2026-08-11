@@ -326,6 +326,9 @@ export function useSaveResumeAnalysis() {
       summary: string;
       missing_skills: string[];
       suggestions: string[];
+      strengths?: string[];
+      missing_keywords?: string[];
+      project_ideas?: string[];
     }) => {
       const userId = await requireUserId();
       const { error } = await supabase.from("resume_analyses").insert({ user_id: userId, ...values });
@@ -404,4 +407,205 @@ export function useThreadMutations() {
   });
 
   return { create, rename, remove };
+}
+
+/* ---------------- career profile ---------------- */
+
+export function useCareerProfile() {
+  return useQuery({
+    queryKey: ["career-profile"],
+    queryFn: async () => {
+      const userId = await requireUserId();
+      const { data, error } = await supabase
+        .from("career_profiles")
+        .select("*")
+        .eq("user_id", userId)
+        .maybeSingle();
+      if (error) throw error;
+      return data;
+    },
+  });
+}
+
+export function useSaveCareerProfile() {
+  const invalidate = useInvalidate([["career-profile"]]);
+  return useMutation({
+    mutationFn: async (values: {
+      target_role?: string;
+      weekly_hours?: number;
+      skills?: Record<string, string>;
+    }) => {
+      const userId = await requireUserId();
+      const { error } = await supabase
+        .from("career_profiles")
+        .upsert({ user_id: userId, ...values }, { onConflict: "user_id" });
+      if (error) throw error;
+    },
+    onSuccess: invalidate,
+  });
+}
+
+/* ---------------- placement applications ---------------- */
+
+export function usePlacements() {
+  return useQuery({
+    queryKey: ["placements"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("placement_applications")
+        .select("*")
+        .order("applied_on", { ascending: false });
+      if (error) throw error;
+      return data;
+    },
+  });
+}
+
+export function usePlacementMutations() {
+  const invalidate = useInvalidate([["placements"]]);
+
+  const add = useMutation({
+    mutationFn: async (values: {
+      company: string;
+      role: string;
+      applied_on: string;
+      status: string;
+      assessment_on?: string | null;
+      interview_on?: string | null;
+    }) => {
+      const userId = await requireUserId();
+      const { error } = await supabase.from("placement_applications").insert({
+        user_id: userId,
+        ...values,
+        assessment_on: values.assessment_on || null,
+        interview_on: values.interview_on || null,
+      });
+      if (error) throw error;
+    },
+    onSuccess: invalidate,
+  });
+
+  const setStatus = useMutation({
+    mutationFn: async (values: { id: string; status: string }) => {
+      const { error } = await supabase
+        .from("placement_applications")
+        .update({ status: values.status })
+        .eq("id", values.id);
+      if (error) throw error;
+    },
+    onSuccess: invalidate,
+  });
+
+  const remove = useMutation({
+    mutationFn: async (id: string) => {
+      const { error } = await supabase.from("placement_applications").delete().eq("id", id);
+      if (error) throw error;
+    },
+    onSuccess: invalidate,
+  });
+
+  return { add, setStatus, remove };
+}
+
+/* ---------------- roadmap ---------------- */
+
+export function useRoadmap() {
+  return useQuery({
+    queryKey: ["roadmap"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("roadmap_tasks")
+        .select("*")
+        .order("day", { ascending: true });
+      if (error) throw error;
+      return data;
+    },
+  });
+}
+
+export function useRoadmapMutations() {
+  const invalidate = useInvalidate([["roadmap"]]);
+
+  const replace = useMutation({
+    mutationFn: async (values: {
+      targetRole: string;
+      days: { day: number; topic: string; focus: string; hours: number }[];
+    }) => {
+      const userId = await requireUserId();
+      const { error: clearError } = await supabase
+        .from("roadmap_tasks")
+        .delete()
+        .eq("user_id", userId);
+      if (clearError) throw clearError;
+      const { error } = await supabase.from("roadmap_tasks").insert(
+        values.days.map((day) => ({
+          user_id: userId,
+          target_role: values.targetRole,
+          day: day.day,
+          topic: day.topic,
+          focus: day.focus,
+          hours: day.hours,
+        })),
+      );
+      if (error) throw error;
+    },
+    onSuccess: invalidate,
+  });
+
+  const toggle = useMutation({
+    mutationFn: async (values: { id: string; completed: boolean }) => {
+      const { error } = await supabase
+        .from("roadmap_tasks")
+        .update({ completed: values.completed })
+        .eq("id", values.id);
+      if (error) throw error;
+    },
+    onSuccess: invalidate,
+  });
+
+  return { replace, toggle };
+}
+
+/* ---------------- mock interviews ---------------- */
+
+export function useInterviewSessions() {
+  return useQuery({
+    queryKey: ["interviews"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("interview_sessions")
+        .select("*")
+        .order("created_at", { ascending: false })
+        .limit(20);
+      if (error) throw error;
+      return data;
+    },
+  });
+}
+
+export function useInterviewMutations() {
+  const invalidate = useInvalidate([["interviews"]]);
+
+  const save = useMutation({
+    mutationFn: async (values: {
+      target_role: string;
+      turns: unknown;
+      overall_score: number;
+      strengths: string[];
+      weaknesses: string[];
+      recommended_topics: string[];
+    }) => {
+      const userId = await requireUserId();
+      const { error } = await supabase.from("interview_sessions").insert({
+        user_id: userId,
+        status: "done",
+        ...values,
+        turns: values.turns as never,
+      });
+      if (error) throw error;
+    },
+    onSuccess: invalidate,
+  });
+
+  return { save };
 }
