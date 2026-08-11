@@ -15,6 +15,11 @@ import { toast } from "sonner";
 
 import { GlassCard, SectionTitle } from "@/components/app/GlassCard";
 import { PageHeader } from "@/components/app/PageHeader";
+import { LifeScoreCard } from "@/components/app/LifeScoreCard";
+import { DailyInsightCard } from "@/components/app/DailyInsightCard";
+import { AchievementBadges } from "@/components/app/AchievementBadges";
+import { useLifeMetrics } from "@/hooks/use-life-metrics";
+import { useSeedDemoData } from "@/lib/demo-data";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
@@ -40,6 +45,8 @@ export const Route = createFileRoute("/_authenticated/dashboard")({
 
 function DashboardPage() {
   const { data: profile } = useProfile();
+  const metrics = useLifeMetrics();
+  const seed = useSeedDemoData();
   const { data: tasks, isPending } = useTasks();
   const { data: subjects } = useSubjects();
   const { data: goals } = useGoals();
@@ -95,6 +102,53 @@ function DashboardPage() {
         }
       />
 
+      <div className="space-y-4">
+        <LifeScoreCard total={metrics.total} breakdown={metrics.breakdown} />
+        <DailyInsightCard context={metrics.aiContext} disabled={!metrics.hasData} />
+      </div>
+
+      {!metrics.hasData ? (
+        <GlassCard className="mt-4 flex flex-wrap items-center justify-between gap-3">
+          <p className="text-sm text-muted-foreground">
+            Nothing here yet — load a realistic sample student profile to explore every feature.
+          </p>
+          <Button
+            variant="hero"
+            size="sm"
+            className="rounded-full"
+            disabled={seed.isPending}
+            onClick={() =>
+              seed.mutate(undefined, {
+                onSuccess: () => toast.success("Demo data loaded."),
+                onError: (error) =>
+                  toast.error(error instanceof Error ? error.message : "Could not load demo data."),
+              })
+            }
+          >
+            <Sparkles className="size-4" />
+            Load demo data
+          </Button>
+        </GlassCard>
+      ) : null}
+
+      <div className="mt-6 grid gap-4 sm:grid-cols-2">
+        <MetricCard
+          icon={Target}
+          label="Career readiness"
+          value={`${metrics.breakdown.careerReadiness}%`}
+          percent={metrics.breakdown.careerReadiness}
+          to="/career"
+        />
+        <MetricCard
+          icon={Sparkles}
+          label="Placement readiness"
+          value={`${metrics.breakdown.placementReadiness}%`}
+          percent={metrics.breakdown.placementReadiness}
+          to="/placements"
+        />
+      </div>
+
+      <div className="mt-6">
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <MetricCard
           icon={CheckCircle2}
@@ -123,6 +177,7 @@ function DashboardPage() {
           value={currency(monthSpend)}
           to="/expenses"
         />
+      </div>
       </div>
 
       <div className="mt-6 grid gap-4 lg:grid-cols-[1.4fr_1fr]">
@@ -227,6 +282,10 @@ function DashboardPage() {
             </ul>
           </GlassCard>
         </div>
+      </div>
+
+      <div className="mt-6">
+        <AchievementBadges badges={metrics.badges} />
       </div>
     </>
   );
