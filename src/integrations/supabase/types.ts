@@ -327,46 +327,94 @@ export type Database = {
       }
       resume_analyses: {
         Row: {
+          ai_ml_skills: string[]
           ats_score: number
+          certifications: string[]
+          completeness_score: number
           created_at: string
+          detected_skills: string[]
+          education: string[]
+          education_score: number
+          experience_score: number
           file_name: string
           id: string
+          internships: string[]
           missing_keywords: string[]
           missing_skills: string[]
+          overall_score: number
+          placement_readiness: number
+          programming_languages: string[]
           project_ideas: string[]
+          projects: string[]
+          projects_score: number
+          readiness_level: string
+          skills_score: number
           strengths: string[]
           suggestions: string[]
           summary: string | null
           target_role: string | null
           user_id: string
+          web_development_skills: string[]
         }
         Insert: {
+          ai_ml_skills?: string[]
           ats_score?: number
+          certifications?: string[]
+          completeness_score?: number
           created_at?: string
+          detected_skills?: string[]
+          education?: string[]
+          education_score?: number
+          experience_score?: number
           file_name: string
           id?: string
+          internships?: string[]
           missing_keywords?: string[]
           missing_skills?: string[]
+          overall_score?: number
+          placement_readiness?: number
+          programming_languages?: string[]
           project_ideas?: string[]
+          projects?: string[]
+          projects_score?: number
+          readiness_level?: string
+          skills_score?: number
           strengths?: string[]
           suggestions?: string[]
           summary?: string | null
           target_role?: string | null
           user_id: string
+          web_development_skills?: string[]
         }
         Update: {
+          ai_ml_skills?: string[]
           ats_score?: number
+          certifications?: string[]
+          completeness_score?: number
           created_at?: string
+          detected_skills?: string[]
+          education?: string[]
+          education_score?: number
+          experience_score?: number
           file_name?: string
           id?: string
+          internships?: string[]
           missing_keywords?: string[]
           missing_skills?: string[]
+          overall_score?: number
+          placement_readiness?: number
+          programming_languages?: string[]
           project_ideas?: string[]
+          projects?: string[]
+          projects_score?: number
+          readiness_level?: string
+          skills_score?: number
           strengths?: string[]
           suggestions?: string[]
           summary?: string | null
           target_role?: string | null
           user_id?: string
+          web_development_skills?: string[]
         }
         Relationships: []
       }
